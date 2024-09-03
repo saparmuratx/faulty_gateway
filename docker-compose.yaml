@@ -1,0 +1,33 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx_foo.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - user-service
+      # - product-service
+    networks:
+      - api_gateway
+
+  user-service:
+    image: fastapi-helloworld-fastapi-helloworld  # Replace with your actual image
+    ports:
+      - "5000:5000"
+    environment:
+      - HELLOWORLD_ENV=enrique catala
+    networks:
+      - api_gateway
+
+  # product-service:
+  #   image: fastapi-helloworld-fastapi-helloworld  # Replace with your actual image
+  #   ports:
+  #     - "3002:5000"
+  #   environment:
+  #     - HELLOWORLD_ENV=enrique catala
+  #   networks:
+  #     - api_gateway
+
+networks:
+  api_gateway:
